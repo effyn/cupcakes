@@ -41,7 +41,7 @@ function echoResults($formFlavors)
         echo "<li>$flavors[$flavor]</li>";
     }
 
-    echo '</ul><p>Order Total: <strong>' .
+    echo '</ul><p>Order Total: <strong>$' .
         number_format(sizeof($formFlavors) * 3.5, 2, '.', ',') .
         '</strong></p>';
 }
