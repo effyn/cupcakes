@@ -28,6 +28,24 @@ function echoForm()
     echo '</ul><input type="submit" value="Order"></form>';
 }
 
+function echoResults($formFlavors)
+{
+    // bring a global into scope; i know this is bad code!
+    $flavors = $GLOBALS['flavors'];
+
+    echo '<h3>Thank you, ' . $_POST['name'] . ', for your order!</h3>
+<p>Order Summary:</p><ul>';
+
+    foreach ($formFlavors as $flavor)
+    {
+        echo "<li>$flavors[$flavor]</li>";
+    }
+
+    echo '</ul><p>Order Total: <strong>' .
+        number_format(sizeof($formFlavors) * 3.5, 2, '.', ',') .
+        '</strong></p>';
+}
+
 if ($_SERVER['REQUEST_METHOD'] == 'GET')
 {
     echoForm();
@@ -55,6 +73,6 @@ else if ($_SERVER['REQUEST_METHOD'] == 'POST')
 
     else
     {
-        //TODO echo the results
+        echoResults($_POST['formFlavors']);
     }
 }
