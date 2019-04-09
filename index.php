@@ -16,13 +16,15 @@ function echoForm()
 
     echo '<h1>Cupcake Fundraiser</h1>
 <form method="post">
-<h3>Your name:</h3><input type="text" name="name" placeholder="Please enter your name" required>
-<h3>Cupcake flavors:</h3><ul style="list-style-type:none">';
+<h3>Your name:</h3><input type="text" name="name" placeholder="Please enter your name" value="' .
+        ((isset($_POST['name']) ? $_POST['name'] : '')) .
+        '" required><h3>Cupcake flavors:</h3><ul style="list-style-type:none">';
 
     foreach ($flavors as $flavor => $label)
     {
-        echo "<li><input type='checkbox' name='formFlavors[]' id='$flavor' value='$flavor'>
-<label for='$flavor'>$label</label></li>";
+        echo "<li><input type='checkbox' name='formFlavors[]' id='$flavor' value='$flavor'" .
+            ((isset($_POST['formFlavors']) && in_array($flavor, $_POST['formFlavors']) ? ' checked' : '')) .
+            "><label for='$flavor'>$label</label></li>";
     }
 
     echo '</ul><input type="submit" value="Order"></form>';
@@ -57,13 +59,13 @@ else if ($_SERVER['REQUEST_METHOD'] == 'POST')
     if (!isset($_POST['name']))
     {
         $error = true;
-        echo '<span style="color:red;">Please enter your name.</span>';
+        echo '<p style="color:red;">Please enter your name.</p>';
     }
 
     if (empty($_POST['formFlavors']))
     {
         $error = true;
-        echo '<span style="color:red;">Please select at least one flavor.</span>';
+        echo '<p style="color:red;">Please select at least one flavor.</p>';
     }
 
     if ($error)
